@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -38,6 +39,11 @@ def event_feed(request):
 	title = "Feed"
 
 	queryset_list = Event.objects.all()
+
+	if request.path == reverse("my-events", kwargs={}):
+		title = "My Events"
+
+		queryset_list = Event.objects.all().filter(user=request.user)
 
 	query = request.GET.get('q')
 
@@ -124,43 +130,6 @@ def event_delete(request, id=None):
 	obj.delete()
 	messages.success(request, "This event has been deleted.")
 	return redirect("events:feed")
-
-
-def my_event_feed(request):
-
-	queryset_list = Event.objects.all().filter(user=request.user)
-
-	query = request.GET.get('q')
-
-	if query:
-		queryset_list = queryset_list.filter(
-				Q(title__icontains=query) |
-				Q(user__username__icontains=query)
-				).distinct()
-
-
-	paginator = Paginator(queryset_list, 3)
-
-	page_request_var = 'page'
-
-	page = request.GET.get(page_request_var)
-	try:
-	    queryset = paginator.page(page)
-	except PageNotAnInteger:
-	    # If page is not an integer, deliver first page.
-	    queryset = paginator.page(1)
-	except EmptyPage:
-	    # If page is out of range (e.g. 9999), deliver last page of results.
-	    queryset = paginator.page(paginator.num_pages)
-
-	context = {
-		"object_list": queryset,
-		"title": "feed",
-		"page_request_var": page_request_var,
-
-	}
-	return render(request, "event_feed.html", context)
-
 
 
 

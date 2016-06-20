@@ -20,12 +20,14 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 
 from accounts.views import (login_view, register_view, logout_view)
+from events.views import event_feed
 
 urlpatterns = [
 	url(r'^$', RedirectView.as_view(pattern_name='events:feed')),
 	url(r'^admin/', admin.site.urls),
 	url(r'^events/', include("events.urls", namespace='events')),
 	url(r'^login/', login_view, name='login'),
+	url(r'^my-events/', event_feed, name='my-events'),
 	url(r'^register/', register_view, name='register'),
 	url(r'^logout/', logout_view, name='logout'),
 ]

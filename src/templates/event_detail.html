@@ -3,11 +3,16 @@
 	{% block content %}
 	<br>
 <div class='col-sm-6 col-sm-offset-3'>
-	{% if instance.image %}<img src="{{ instance.image.url }}" class='img-responsive'>{% endif %}
+	{% if instance.poster %}<img src="{{ instance.poster.url }}" class='img-responsive'>{% endif %}
 	<h1>{{ instance.title }}</h1>
 	{{ instance.start_date }}<br>
 	{{ instance.end_date }}<br>
-	{{ instance.venue_name }}
+	{{ instance.venue_name }}<br><br>
+	{% if instance.user == request.user or request.user.is_superuser %}
+	<a href="{% url 'events:update' id=instance.id %}"><button type="button" class="btn btn-primary">Edit</button></a><br><br>
+	<a href="{% url 'events:delete' id=instance.id %}" class='confirm-delete'><button type="button" class="btn btn-danger">Delete</button></a><br><br>
+	{% endif %}
 </div>
+
 	{% endblock %}
 

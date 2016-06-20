@@ -8,9 +8,17 @@ from django.utils import timezone
 def upload_location(instance, filename):
 	return "%s/%s" %(instance.id, filename)
 
+# class Image(models.Model):
+# 	event = models.ForeignKey(Event)
+# 	poster = models.ImageField(upload_to=upload_location, null=True, blank=False)
+
+# 	def __str__(self):
+# 		return "%s " %(event.title)
+	
+
 class Event(models.Model):
 	title = models.CharField(max_length=120)
-	image = models.ImageField(upload_to=upload_location, null=True, blank=True)
+	poster = models.ImageField(upload_to=upload_location, null=True, blank=False)
 	start_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)   # Remove default
 	end_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now) 	# Remove default
 	ticket_link = models.URLField(null=True, blank=True)
