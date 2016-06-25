@@ -8,17 +8,18 @@ from django.utils import timezone
 def upload_location(instance, filename):
 	return "%s/%s" %(instance.id, filename)
 
-# class Image(models.Model):
-# 	event = models.ForeignKey(Event)
-# 	poster = models.ImageField(upload_to=upload_location, null=True, blank=False)
 
-# 	def __str__(self):
-# 		return "%s " %(event.title)
-	
+class University(models.Model):
+	university = models.CharField(max_length=120)
+
+	def __str__(self):
+		return self.university
+
 
 class Event(models.Model):
 	title = models.CharField(max_length=120)
 	poster = models.ImageField(upload_to=upload_location, null=True, blank=False)
+	university = models.ManyToManyField(University)
 	start_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)   # Remove default
 	end_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now) 	# Remove default
 	ticket_link = models.URLField(null=True, blank=True)
@@ -29,7 +30,7 @@ class Event(models.Model):
 	venue_postcode = models.CharField(max_length=10)
 	contact_details = models.TextField(max_length=120)
 	ticket_link = models.URLField(null=True, blank=True)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	is_reviewed = models.BooleanField(default=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)

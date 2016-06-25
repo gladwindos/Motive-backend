@@ -20,6 +20,8 @@ def event_create(request):
 	if form.is_valid() and request.user.is_authenticated():
 		instance = form.save(commit=False)
 		instance.user = request.user
+		if request.user.is_staff:
+			instance.is_reviewed = True
 		instance.save()
 		messages.success(request, "Event created")
 		return HttpResponseRedirect(instance.get_absolute_url())
@@ -34,7 +36,7 @@ def event_create(request):
 	return render(request, "event_form.html", context)
 
 
-def event_feed(request):
+def event_list(request):
 
 	title = "Feed"
 
@@ -74,7 +76,7 @@ def event_feed(request):
 		"page_request_var": page_request_var,
 
 	}
-	return render(request, "event_feed.html", context)
+	return render(request, "event_list.html", context)
 
 
 

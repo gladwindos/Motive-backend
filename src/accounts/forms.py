@@ -46,8 +46,6 @@ class UserRegisterForm(forms.ModelForm):
 			'email',
 			'email_confirm',
 			'password',
-
-
 		]
 
 	def clean_email_confirm(self):
