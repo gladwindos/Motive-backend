@@ -14,7 +14,7 @@ event_detail_url = HyperlinkedIdentityField(
 class EventListSerializer(ModelSerializer):
 	url = event_detail_url
 
-	user = SerializerMethodField()
+	# user = SerializerMethodField()
 
 	class Meta:
 		model = Event
@@ -22,11 +22,17 @@ class EventListSerializer(ModelSerializer):
 			'id',
 			'url',
 			'title',
+			'university',
 			'poster',
 			'start_date',
 			'end_date',
-			'user',
-			'is_reviewed',
+			'ticket_link',
+			'description',
+			'venue_name',
+			'venue_address',
+			'venue_city',
+			'venue_postcode',
+			'contact_details',
 		]
 
 	def get_user(self, obj):
@@ -34,13 +40,14 @@ class EventListSerializer(ModelSerializer):
 
 
 class EventDetailSerializer(ModelSerializer):
-	user = SerializerMethodField()
+	# user = SerializerMethodField()
 	poster = SerializerMethodField()
 	class Meta:
 		model = Event
 		fields = [
 			'id',
 			'title',
+			'university',
 			'poster',
 			'start_date',
 			'end_date',
@@ -52,8 +59,6 @@ class EventDetailSerializer(ModelSerializer):
 			'venue_postcode',
 			'contact_details',
 			'ticket_link',
-			'user',
-			'is_reviewed',
 		]
 
 	def get_user(self, obj):

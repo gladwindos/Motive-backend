@@ -5,8 +5,8 @@ from django.contrib import admin
 from .models import Event, University
 
 class EventModelAdmin(admin.ModelAdmin):
-	list_display = ["title", "user", "start_date", "updated"]
-	search_fields = ["title", "user__username", "university__university"]
+	list_display = ["title", "user", "start_date", "updated", "is_reviewed"]
+	search_fields = ["title", "user__username", "university__university", "is_reviewed"]
 	list_filter = ('title','university')
 
 admin.site.register(Event, EventModelAdmin)
