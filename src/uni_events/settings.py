@@ -177,6 +177,27 @@ REST_FRAMEWORK = {
     )
 }
 
+AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+
+if DEBUG == False:
+    AWS_STORAGE_BUCKET_NAME = 'uni-events-media'
+    AWS_ACCESS_KEY_ID = 'AKIAIPNL3TWCH4E55LQQ'
+    AWS_SECRET_ACCESS_KEY = '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'
+
+    # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+    # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+    # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+    # We also use it in the next setting.
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+    # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
+    # refers directly to STATIC_URL. So it's safest to always set it.
+    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 
 
 
