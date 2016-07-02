@@ -179,7 +179,7 @@ REST_FRAMEWORK = {
 
 
 if os.environ.get('ENV_VAR') == 'prod':
-    from aws_settings import *
+    from .aws_settings import *
 
 
 
