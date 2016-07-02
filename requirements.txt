@@ -7,3 +7,6 @@ Markdown==2.6.6
 Pillow==3.2.0
 psycopg2==2.6.1
 pytz==2016.4
+django-storages==1.4.1
+boto==2.41.0
+botocore==1.4.34

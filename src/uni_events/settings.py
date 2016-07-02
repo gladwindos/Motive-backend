@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # thrid party 
     'crispy_forms',
     'rest_framework',
+    'storages',
     
     # local apps
     'events',
@@ -95,7 +96,7 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
-
+    
 else:
 
     DATABASES = {
@@ -177,7 +178,8 @@ REST_FRAMEWORK = {
 }
 
 
-
+if os.environ.get('ENV_VAR') == 'prod':
+    from aws_settings import *
 
 
 
