@@ -1,4 +1,5 @@
 from rest_framework.serializers import (
+		CharField,
 		ModelSerializer, 
 		HyperlinkedIdentityField, 
 		SerializerMethodField
@@ -10,6 +11,16 @@ event_detail_url = HyperlinkedIdentityField(
 			view_name='events-api:detail',
 			lookup_field='id',
 			)
+
+class Auth0FavouriteSerializer(ModelSerializer):
+	# auth0_favourite_ids = CharField(max_length=50)
+	class Meta:
+		model = Event
+		fields = [
+			'auth0_favourite_ids',
+		]
+
+
 
 class EventListSerializer(ModelSerializer):
 	url = event_detail_url
@@ -33,6 +44,7 @@ class EventListSerializer(ModelSerializer):
 			'venue_city',
 			'venue_postcode',
 			'contact_details',
+			'auth0_favourite_ids',
 		]
 
 	def get_user(self, obj):
