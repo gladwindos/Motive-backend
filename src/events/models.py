@@ -29,7 +29,7 @@ class Event(models.Model):
 	venue_address = models.CharField(max_length=40)
 	venue_city = models.CharField(max_length=40)
 	venue_postcode = models.CharField(max_length=10)
-	contact_details = models.TextField(max_length=120)
+	contact_details = models.TextField(max_length=120, blank=True,null=True)
 	ticket_link = models.URLField(null=True, blank=True)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	is_reviewed = models.BooleanField(default=False)

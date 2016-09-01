@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework.filters import (
 		SearchFilter,
 	)
@@ -22,7 +23,7 @@ class EventDetailAPIView(RetrieveAPIView):
 
 
 class EventListAPIView(ListAPIView):
-	queryset = Event.objects.all()
+	queryset = Event.objects.filter(start_date__gte=timezone.now()).order_by('start_date') #Event.objects.all()
 	serializer_class = EventListSerializer
 	filter_backends = [SearchFilter]
 	search_fields = ['title', 'user__username', 'university__university']

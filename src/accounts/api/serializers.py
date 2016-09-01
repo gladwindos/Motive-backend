@@ -108,6 +108,16 @@ class UserLoginSerializer(ModelSerializer):
 
 		return data
 
+class UserDetailSerializer(ModelSerializer):
+	class Meta:
+		model = User
+		fields = [
+			'id',
+			'username',
+			'email',
+
+		]
+
 
 
 

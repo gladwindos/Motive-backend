@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'rloi*h_7!4!p&bx-#d-n^r-)o)58p$q_^okg@m*9zt%hzmhtq1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # thrid party 
     'crispy_forms',
     'rest_framework',
+    'rest_framework.authtoken',
     'storages',
     
     # local apps
@@ -170,7 +171,8 @@ REST_FRAMEWORK = {
     # )
     'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework.authentication.SessionAuthentication',
-    # 'rest_framework.authentication.BasicAuthentication'
+    # 'rest_framework.authentication.BasicAuthentication',
+    'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
     'rest_framework.permissions.AllowAny',

@@ -22,6 +22,8 @@ from django.views.generic import RedirectView
 from accounts.views import (login_view, register_view, logout_view)
 from events.views import event_list
 
+from rest_framework.authtoken import views
+
 urlpatterns = [
 	url(r'^$', RedirectView.as_view(pattern_name='events:list')),
 	url(r'^admin/', admin.site.urls),
@@ -32,6 +34,10 @@ urlpatterns = [
 	url(r'^logout/', logout_view, name='logout'),
 	url(r'^api/events/', include("events.api.urls", namespace='events-api')),
 	url(r'^api/users/', include("accounts.api.urls", namespace='users-api')),
+]
+
+urlpatterns += [
+    url(r'^api-token-auth/', views.obtain_auth_token)
 ]
 
 if settings.DEBUG:
