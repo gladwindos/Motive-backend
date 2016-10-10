@@ -23,7 +23,13 @@ class EventDetailAPIView(RetrieveAPIView):
 
 
 class EventListAPIView(ListAPIView):
-	queryset = Event.objects.filter(start_date__gte=timezone.now(), is_reviewed=True).order_by('start_date') #Event.objects.all()
+
+	def get_queryset(self):
+		today = timezone.now()
+		queryset = Event.objects.filter(end_date__gte=today, is_reviewed=True).order_by('start_date')
+		return queryset
+		 #Event.objects.all()
+
 	serializer_class = EventListSerializer
 	filter_backends = [SearchFilter]
 	search_fields = ['title', 'user__username', 'university__university']
