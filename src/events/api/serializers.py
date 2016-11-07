@@ -35,6 +35,7 @@ class EventListSerializer(ModelSerializer):
 			'title',
 			'university',
 			'poster',
+			'feed_poster',
 			'start_date',
 			'end_date',
 			'ticket_link',

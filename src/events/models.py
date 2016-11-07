@@ -7,8 +7,10 @@ from django.utils import timezone
 # Create your models here.
 
 def upload_location(instance, filename):
-	return "%s/%s" %(instance.id, filename)
+	return "%s/main/%s" %(instance.id, filename)
 
+def upload_location_feed(instance, filename):
+	return "%s/feed/%s" %(instance.id, filename)
 
 class University(models.Model):
 	university = models.CharField(max_length=120)
@@ -20,6 +22,7 @@ class University(models.Model):
 class Event(models.Model):
 	title = models.CharField(max_length=120)
 	poster = models.ImageField(upload_to=upload_location, null=True, blank=False)
+	feed_poster = models.ImageField(upload_to=upload_location_feed, null=True, blank=True)
 	university = models.ManyToManyField(University)
 	start_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)   # Remove default
 	end_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now) 	# Remove default
