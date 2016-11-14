@@ -19,41 +19,23 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_401_UN
 from rest_framework.views import APIView
 
 from events.models import Event
-from .serializers import UserCreateSerializer, UserLoginSerializer, UserDetailSerializer
+from accounts.models import UserProfile
+
+from .serializers import UserProfileSerializer
 
 User = get_user_model()
 
+class UserProfileAPIView(RetrieveAPIView):
 
-class UserCreateAPIView(CreateAPIView):
-	serializer_class = UserCreateSerializer
-	queryset = User.objects.all()
-
-
-
-class UserLoginAPIView(APIView):
-	permission_classes = [AllowAny]
-	serializer_class = UserLoginSerializer
-
-
-	def post(self, request, *args, **kwargs):
-		data = request.data
-		serializer_class = UserLoginSerializer(data=data)
-		serializer = UserLoginSerializer(data=data)
-		if serializer.is_valid(raise_exception=True):
-			new_data = serializer.data
-			return Response(new_data, status=HTTP_200_OK)
-		return response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-
-
-class UserDetailAPIView(RetrieveAPIView):
-	
 	authentication_classes = (authentication.TokenAuthentication,)
-	serializer_class = UserDetailSerializer
+	serializer_class = UserProfileSerializer
 
 	def get(self, request, format=None):
-		# if request.user:
-		return Response(UserDetailSerializer(request.user).data)
-		# return response(serializer.errors, status=HTTP_401_UNAUTHORIZED)
+		queryset = UserProfile.objects.get(user=request.user)
+		serializer = UserProfileSerializer(queryset, context={'request': request})
+		return Response(serializer.data)
 
-
+class UserProfileCreateAPIView(CreateAPIView):
+	serializer_class = UserProfileSerializer
+	queryset = UserProfile.objects.all()
 

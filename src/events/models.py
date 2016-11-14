@@ -18,6 +18,14 @@ class University(models.Model):
 	def __str__(self):
 		return self.university
 
+class Venue(models.Model):
+	name = models.CharField(max_length=60)
+	address = models.CharField(max_length=60, null=True, blank=True)
+	city = models.CharField(max_length=60, null=True, blank=True)
+	postcode = models.CharField(max_length=10, null=True, blank=True)
+
+	def __str__(self):
+		return self.name
 
 class Event(models.Model):
 	title = models.CharField(max_length=120)
@@ -28,10 +36,14 @@ class Event(models.Model):
 	end_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now) 	# Remove default
 	ticket_link = models.URLField(null=True, blank=True)
 	description = models.TextField(max_length=5000, blank=True, null=True)
+
+	venue = models.OneToOneField(Venue, on_delete=models.CASCADE, null=True, blank=True)
+
 	venue_name = models.CharField(max_length=40)
 	venue_address = models.CharField(max_length=40)
 	venue_city = models.CharField(max_length=40)
 	venue_postcode = models.CharField(max_length=10)
+
 	contact_details = models.TextField(max_length=120, blank=True,null=True)
 	ticket_link = models.URLField(null=True, blank=True)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
