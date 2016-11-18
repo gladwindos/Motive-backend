@@ -39,10 +39,10 @@ class Event(models.Model):
 
 	venue = models.OneToOneField(Venue, on_delete=models.CASCADE, null=True, blank=True)
 
-	venue_name = models.CharField(max_length=40)
-	venue_address = models.CharField(max_length=40)
-	venue_city = models.CharField(max_length=40)
-	venue_postcode = models.CharField(max_length=10)
+	venue_name = models.CharField(max_length=40, blank=True,null=True)
+	venue_address = models.CharField(max_length=40, blank=True,null=True)
+	venue_city = models.CharField(max_length=40, blank=True,null=True)
+	venue_postcode = models.CharField(max_length=10, blank=True,null=True)
 
 	contact_details = models.TextField(max_length=120, blank=True,null=True)
 	ticket_link = models.URLField(null=True, blank=True)
